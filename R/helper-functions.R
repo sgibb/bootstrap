@@ -15,6 +15,16 @@
 
 .clust <- function(x, fun) {
   hc <- fun(x)
-  bm <- as.binary.matrix.hclust(hc)
+  return(as.binary.matrix.hclust(hc))
+}
+
+.calculateMatches <- function(origin, current) {
+  ## both 1
+  one <- tcrossprod(origin, current)
+  ## both 0
+  zero <- tcrossprod(1-origin, 1-current)
+
+  ## calc matches
+  return(rowSums(one + zero == ncol(origin)))
 }
 

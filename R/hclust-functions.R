@@ -18,7 +18,7 @@ as.binary.matrix.hclust <- function(x) {
 
   m <- matrix(0L, nrow=nr, ncol=nr+1L)
 
-  for (i in seq.int(from=1L, to=nr, by=1L)) {
+  for (i in seq.int(from=1L, to=nr)) {
     left <- x$merge[i, 1L]
 
     if (left < 0L) {
