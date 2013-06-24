@@ -13,23 +13,17 @@
 ##
 ## See <http://www.gnu.org/licenses/>
 
-.clust <- function(x, fun) {
-  hc <- fun(x)
-  return(as.binary.matrix.hclust(hc))
-}
+#' @export
+bootstrap <- function(x, fun, n=100L, mc.cores=getOption("mc.cores", 2L)) {
+  fun <- match.fun(fun)
 
-.calculateMatches <- function(origin, current, nc=ncol(origin)) {
-  ## both 1
-  one <- tcrossprod(origin, current)
-  ## both 0
-  zero <- tcrossprod(1-origin, 1-current)
+  origin <- .clust(x, fun=fun)
 
-  ## calc matches
-  return(rowSums(one + zero == nc))
-}
+  v <- mclapply(seq_len(n), function(y, origin, size, fun, nco) {
+    current <- .clust(.resample(x, size=size), fun=fun)
+    return(.calculateMatches(origin, current, nco))
+  }, mc.cores=mc.cores, origin=origin, size=ncol(x), fun=fun, nco=ncol(origin))
 
-.resample <- function(x, size=ncol(x)) {
-  sel <- sample.int(ncol(x), size=size, replace=TRUE)
-  return(x[, sel])
+  return(colSums(do.call(rbind, v))/n)
 }
 

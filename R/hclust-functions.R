@@ -18,7 +18,7 @@ as.binary.matrix.hclust <- function(x) {
 
   m <- matrix(0L, nrow=nr, ncol=nr+1L)
 
-  for (i in seq.int(from=1L, to=nr)) {
+  for (i in seq_len(nr)) {
     left <- x$merge[i, 1L]
 
     if (left < 0L) {
@@ -41,5 +41,49 @@ as.binary.matrix.hclust <- function(x) {
   }
 
   return(m)
+}
+
+.text.coord.hclust <- function(x) {
+  nr <- as.integer(nrow(x$merge))
+
+  p <- matrix(c(rep(0L, nr), x$height), nrow=nr, ncol=2, byrow=FALSE,
+              dimnames=list(c(), c("x", "y")))
+  o <- order(x$order)
+  tmp <- double(2)
+
+  for (i in seq_len(nr)) {
+    left <- x$merge[i, 1L]
+
+    if (left < 0L) {
+      ## negative values correspond to observations
+      tmp[1L] <- o[-left]
+    } else {
+      ## positive values correspond to childcluster
+      tmp[1L] <- p[left, 1L]
+    }
+
+    right <- x$merge[i, 2L]
+
+    if (right < 0L) {
+      ## negative values correspond to observations
+      tmp[2L] <- o[-right]
+    } else {
+      ## positive values correspond to childcluster
+      tmp[2L] <- p[right, 1L]
+    }
+
+    p[i, 1L] <- mean(tmp)
+  }
+
+  return(p)
+}
+
+bootlabels.hclust <- function(x, bootstrapValues, horiz=FALSE, ...) {
+  p <- .text.coord.hclust(x)
+  if (horiz) {
+    p[, c(2,1)] <- p
+  }
+  labels <- sprintf("%.2f", bootstrapValues)
+  text(p, labels=labels, ...)
 }
 
