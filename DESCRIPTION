@@ -12,3 +12,5 @@ URL: https://github.com/sgibb/bootstrap
 LazyLoad: yes
 Collate:
     'package.R'
+    'hclust-functions.R'
+    'helper-functions.R'
