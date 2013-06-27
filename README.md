@@ -3,7 +3,7 @@
 
 ## Install
 
-```R
+```s
 install.packages("devtools")
 library("devtools")
 install_github("bootstrap", "sgibb")
@@ -11,7 +11,7 @@ install_github("bootstrap", "sgibb")
 
 ## Example
 
-```R
+```s
 ## load library
 library("bootstrap")
 
