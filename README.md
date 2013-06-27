@@ -28,5 +28,4 @@ plot(hc)
 ## draw bootstrap values to corresponding node
 bootlabels.hclust(hc, b, col="blue")
 ```
-![cluster dendrogram](http://imgur.com/BXMVdAV)
-
+![cluster dendrogram](http://i.imgur.com/BXMVdAV.png)
