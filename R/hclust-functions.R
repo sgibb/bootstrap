@@ -13,6 +13,8 @@
 ##
 ## See <http://www.gnu.org/licenses/>
 
+## based on pvclust:::hc2split (pvclust 1.2-2) by
+## Ryota Suzuki <suzuki@ef-prime.com>
 as.binary.matrix.hclust <- function(x) {
   nr <- as.integer(nrow(x$merge))
 
@@ -43,6 +45,8 @@ as.binary.matrix.hclust <- function(x) {
   return(m)
 }
 
+## based on pvclust:::hc2axes (pvclust 1.2-2) by
+## Ryota Suzuki <suzuki@ef-prime.com>
 .text.coord.hclust <- function(x) {
   nr <- as.integer(nrow(x$merge))
 
@@ -78,6 +82,17 @@ as.binary.matrix.hclust <- function(x) {
   return(p)
 }
 
+#' Print bootstrap values.
+#'
+#' This function prints bootstrap values to the corresponding node.
+#'
+#' @param x \code{hclust} object
+#' @param bootstrapValues \code{numeric}, bootstrap values
+#' @param horiz print values for a horizontal tree?
+#'
+#' @seealso \code{\link{bootstrap}}
+#' @rdname bootlabels
+#' @export
 bootlabels.hclust <- function(x, bootstrapValues, horiz=FALSE, ...) {
   p <- .text.coord.hclust(x)
   if (horiz) {
@@ -85,5 +100,6 @@ bootlabels.hclust <- function(x, bootstrapValues, horiz=FALSE, ...) {
   }
   labels <- sprintf("%.2f", bootstrapValues)
   text(p, labels=labels, ...)
+  invisible(NULL)
 }
 
