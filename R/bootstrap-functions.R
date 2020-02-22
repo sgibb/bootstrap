@@ -54,7 +54,7 @@
 #' @rdname bootstrap
 #' @importFrom parallel mclapply
 #' @export
-bootstrap <- function(x, fun, n=1000L, mc.cores=getOption("mc.cores", 2L)) {
+bootstrap <- function(x, fun, n=1000L, mc.cores=1) {
   fun <- match.fun(fun)
 
   origin <- .clust(x, fun=fun)

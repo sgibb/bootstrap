@@ -6,7 +6,7 @@
 ```s
 install.packages("devtools")
 library("devtools")
-install_github("bootstrap", "sgibb")
+install_github("sgibb/bootstrap") #may be asked to DL Rtools for windows; no issues, just do it :)
 ```
 
 ## Example
@@ -23,7 +23,7 @@ b <- bootstrap(USArrests, fun=createHclustObject, n=100L)
 
 ## plot
 hc <- createHclustObject(USArrests)
-plot(hc)
+plot(hc) #Note add "hang=-1" for lining up the terminals
 
 ## draw bootstrap values to corresponding node
 bootlabels.hclust(hc, b, col="blue")
