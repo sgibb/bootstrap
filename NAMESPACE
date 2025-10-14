@@ -1,3 +1,0 @@
-export(bootlabels.hclust)
-export(bootstrap)
-importFrom(parallel,mclapply)
